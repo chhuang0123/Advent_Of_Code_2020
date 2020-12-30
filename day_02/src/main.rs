@@ -6,10 +6,10 @@ use std::io::{BufRead, BufReader};
 fn is_valid(source: String) -> i32 {
     // println!("{}", source);
 
-    let index_1 = source.find("-").unwrap();
-    let index_2 = source.find(" ").unwrap();
-    let index_3 = source.find(":").unwrap();
-    let index_4 = source.rfind(" ").unwrap();
+    let index_1 = source.find('-').unwrap();
+    let index_2 = source.find(' ').unwrap();
+    let index_3 = source.find(':').unwrap();
+    let index_4 = source.rfind(' ').unwrap();
     // println!("{} {} {} {}", index_1, index_2, index_3, index_4);
 
     let min: usize = source.get(0..index_1).unwrap().parse().unwrap();
@@ -31,10 +31,10 @@ fn is_valid(source: String) -> i32 {
 fn is_valid_part_2(source: String) -> i32 {
     // println!("{}", source);
 
-    let index_1 = source.find("-").unwrap();
-    let index_2 = source.find(" ").unwrap();
-    let index_3 = source.find(":").unwrap();
-    let index_4 = source.rfind(" ").unwrap();
+    let index_1 = source.find('-').unwrap();
+    let index_2 = source.find(' ').unwrap();
+    let index_3 = source.find(':').unwrap();
+    let index_4 = source.rfind(' ').unwrap();
     // println!("{} {} {} {}", index_1, index_2, index_3, index_4);
 
     let alphabet = source.get(index_2 + 1..index_3).unwrap();
@@ -71,7 +71,7 @@ fn main() {
         total += is_valid(line.unwrap());
     }
 
-    println!("part1: total valid: {}", total);
+    println!("part 1: total valid: {}", total);
 
     // part 2
     let filename = &args[1];
@@ -83,5 +83,5 @@ fn main() {
         total += is_valid_part_2(line.unwrap());
     }
 
-    println!("part2: total valid: {}", total);
+    println!("part 2: total valid: {}", total);
 }
