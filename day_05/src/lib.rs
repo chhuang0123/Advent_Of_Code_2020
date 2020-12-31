@@ -28,7 +28,7 @@ fn parse_column(_source: &str) -> i32 {
 
 #[test]
 fn test_parse_boarding_string_success() {
-    assert_eq!(parse_boarding_string(&"FBFBBFFRLR"), (44, 5));
+    assert_eq!(parse_boarding_string(String::from("FBFBBFFRLR")), (44, 5));
 }
 
 #[allow(dead_code)]
