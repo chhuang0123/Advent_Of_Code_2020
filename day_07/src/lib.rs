@@ -67,7 +67,7 @@ pub fn parse_rule(_source: String) -> (String, Vec<(usize, String)>) {
 
 pub fn match_rule(key: String, rules: HashMap<String, Vec<(usize, String)>>) -> usize {
     let mut bag_stack: Vec<String> = vec![key];
-    println!("-> start: {:?}", bag_stack);
+    // println!("-> start: {:?}", bag_stack);
 
     while bag_stack.len() != 0 {
         // println!("current: {:?}", bag_stack);
@@ -92,4 +92,33 @@ pub fn match_rule(key: String, rules: HashMap<String, Vec<(usize, String)>>) -> 
     }
 
     0
+}
+
+pub fn match_rule_v2(key: String, rules: HashMap<String, Vec<(usize, String)>>) -> usize {
+    let mut pop_count = 0;
+    let mut bag_stack: Vec<String> = vec![key];
+    // println!("-> start: {:?}", bag_stack);
+
+    while bag_stack.len() != 0 {
+        // println!("current: {:?}", bag_stack);
+
+        pop_count += 1;
+        let tmp_key: String = bag_stack.pop().unwrap();
+        let rules = rules.get(&tmp_key).unwrap();
+
+        // println!("matched rules: {:?}", rules);
+
+        for rule in rules {
+            if rule.0 == 0 {
+                continue;
+            }
+
+            // println!("add : {:?}", rule.1);
+            for _ in 0..rule.0 {
+                bag_stack.push(String::from(rule.1.clone()));
+            }
+        }
+    }
+
+    pop_count - 1
 }

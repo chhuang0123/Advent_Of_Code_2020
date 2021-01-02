@@ -8,7 +8,7 @@ fn main() {
     let args: Vec<String> = std::env::args().skip(1).collect();
 
     // part 1
-    let filename = &args[0];
+    let filename = &args[1];
     let file = File::open(filename).unwrap();
     let reader = BufReader::new(file);
 

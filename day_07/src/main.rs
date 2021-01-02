@@ -1,4 +1,4 @@
-use day_07::{match_rule, parse_rule};
+use day_07::{match_rule, match_rule_v2, parse_rule};
 use std::collections::HashMap;
 use std::fs::File;
 use std::io::{BufRead, BufReader};
@@ -28,4 +28,11 @@ fn main() {
         total_valid += match_rule(String::from(key), rules.clone());
     }
     println!("part 1: {} total valid", total_valid);
+
+    // part 2
+    let result = match_rule_v2(String::from("shiny gold"), rules.clone());
+    println!(
+        "part 2: a single shiny gold bag must contain {} other bags.",
+        result
+    );
 }

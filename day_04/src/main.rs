@@ -28,7 +28,7 @@ fn main() {
     println!("part 1: {} valid", valid_count);
 
     // part 2
-    let filename = &args[1];
+    let filename = &args[0];
     let file = File::open(filename).unwrap();
     let reader = BufReader::new(file);
 

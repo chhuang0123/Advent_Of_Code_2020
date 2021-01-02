@@ -74,7 +74,7 @@ fn main() {
     println!("part 1: total valid: {}", total);
 
     // part 2
-    let filename = &args[1];
+    let filename = &args[0];
     let file = File::open(filename).unwrap();
     let reader = BufReader::new(file);
 
