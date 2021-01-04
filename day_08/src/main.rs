@@ -1,4 +1,4 @@
-use day_08::parse_rule;
+use day_08::get_acc;
 use std::fs::File;
 use std::io::{BufRead, BufReader};
 
@@ -10,25 +10,53 @@ fn main() {
     let file = File::open(filename).unwrap();
     let reader = BufReader::new(file);
 
-    let mut rules: Vec<(String, bool)> = Vec::new();
+    let mut rules: Vec<String> = Vec::new();
     for (_, line) in reader.lines().enumerate() {
-        rules.push((line.unwrap(), false));
+        rules.push(line.unwrap());
     }
 
-    let mut acc_value: i32 = 0;
-    let mut index: i32 = 0;
-    let mut indices: Vec<i32> = vec![0];
-    loop {
-        let rule = rules.get(index as usize).unwrap();
-        let result = parse_rule(String::from(rule.0.clone()));
-        index += result.0;
-        acc_value += result.1;
+    let result = get_acc(rules);
+    let acc_value: i32 = result.0;
+    let index: i32 = result.1;
 
-        if indices.contains(&index) {
+    println!(
+        "part 1: accumulator = {}, stop index = {}",
+        acc_value, index
+    );
+
+    // part 2
+    let filename = &args[1];
+    let file = File::open(filename).unwrap();
+    let reader = BufReader::new(file);
+
+    let mut rules: Vec<String> = Vec::new();
+    for (_, line) in reader.lines().enumerate() {
+        rules.push(line.unwrap());
+    }
+
+    let rule_count = rules.len();
+    for i in 0..rule_count {
+        // println!("{} - before: {:?}", i, rules);
+
+        let mut tmp_rules = rules.clone();
+        if let Some(tmp_rule) = tmp_rules.get_mut(i) {
+            if tmp_rule.contains("nop") {
+                *tmp_rule = tmp_rule.replace("nop", "jmp");
+            } else if tmp_rule.contains("jmp") {
+                *tmp_rule = tmp_rule.replace("jmp", "nop");
+            }
+        };
+
+        if tmp_rules == rules {
+            continue;
+        }
+
+        // println!("{} after: {:?}", i, tmp_rules);
+
+        let result = get_acc(tmp_rules);
+        if result.1 == rule_count as i32 {
+            println!("part 2: accumulator = {}, stop rule = {}", result.0, i);
             break;
         }
-        indices.push(index);
     }
-
-    println!("part 1: accumulator = {}", acc_value);
 }

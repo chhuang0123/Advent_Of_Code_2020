@@ -1,3 +1,11 @@
+#![allow(
+    dead_code,
+    unused_imports,
+    unused_mut,
+    unused_variables,
+    clippy::neg_multiply
+)]
+
 use regex::Regex;
 
 #[cfg(test)]
@@ -13,7 +21,7 @@ mod tests {
     }
 }
 
-pub fn parse_rule(rule: String) -> (i32, i32) {
+fn parse_rule(rule: String) -> (i32, i32) {
     let re = Regex::new(r"([a-z]{3})\s(\S{1})(\d+)").unwrap();
 
     let mut result = (0, 0);
@@ -40,4 +48,33 @@ pub fn parse_rule(rule: String) -> (i32, i32) {
     }
 
     result
+}
+
+pub fn get_acc(rules: Vec<String>) -> (i32, i32) {
+    let mut acc_value: i32 = 0;
+    let mut index: i32 = 0;
+    let mut indices: Vec<i32> = vec![0];
+    let max = rules.len() as i32;
+
+    loop {
+        let rule = rules.get(index as usize).unwrap();
+        let result = parse_rule(rule.clone());
+        index += result.0;
+        acc_value += result.1;
+
+        if index < 0 || index > max {
+            break;
+        }
+
+        if index == max {
+            return (acc_value, max);
+        }
+
+        if indices.contains(&index) {
+            break;
+        }
+        indices.push(index);
+    }
+
+    (acc_value, index)
 }
